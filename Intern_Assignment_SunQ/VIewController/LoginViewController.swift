@@ -4,7 +4,6 @@ import AuthenticationServices
 
 @available(iOS 13.0, *)
 class LoginViewController: UIViewController, CLLocationManagerDelegate {
-    
     var locationManager: CLLocationManager!
     var longitude: Double!
     var latitude: Double!

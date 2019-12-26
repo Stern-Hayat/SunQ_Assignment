@@ -6,8 +6,7 @@ import CoreLocation
 import SafariServices
 
 class TopListPageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,CLLocationManagerDelegate{
-    
-    @IBOutlet var tableView: UITableView!
+    @IBOutlet var listTableView: UITableView!
     var listData = [(name: String, Web: String, Mobile: String)]()
     var i = 0;
     var saveDataForKeyName = "savedURLString"
@@ -22,8 +21,8 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
+        listTableView.delegate = self
+        listTableView.dataSource = self
         let ud = UserDefaults.standard
         let URLString = ud.object(forKey: saveDataForKeyName) as! String
         print(URLString)
@@ -47,7 +46,7 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
             //Webサイト及びモバイルサイトがない場合の例外処理検証用のダミーデータ
             self.listData.append((name: "A-ホームページを作っていないお店", Web: "", Mobile: ""))
             self.listData.sort{$0<$1}
-            self.tableView.reloadData()
+            self.listTableView.reloadData()
         }
 
     }

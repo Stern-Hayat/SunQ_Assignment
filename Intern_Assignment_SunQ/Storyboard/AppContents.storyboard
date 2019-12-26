@@ -41,7 +41,7 @@
                         <viewLayoutGuide key="safeArea" id="88B-i0-fsV"/>
                     </view>
                     <connections>
-                        <outlet property="tableView" destination="HMd-ZB-cSE" id="eQ8-1p-KBz"/>
+                        <outlet property="listTableView" destination="HMd-ZB-cSE" id="cHG-8l-6Bw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ugh-VR-EKl" userLabel="First Responder" sceneMemberID="firstResponder"/>
