@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1C250E3023B0A8B80047C33D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C250E2F23B0A8B80047C33D /* AppDelegate.swift */; };
-		1C250E3223B0A8B80047C33D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C250E3123B0A8B80047C33D /* ViewController.swift */; };
 		1C250E3523B0A8B80047C33D /* LoginView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C250E3323B0A8B80047C33D /* LoginView.storyboard */; };
 		1C250E3723B0A8BC0047C33D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C250E3623B0A8BC0047C33D /* Assets.xcassets */; };
 		1C250E3A23B0A8BC0047C33D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C250E3823B0A8BC0047C33D /* LaunchScreen.storyboard */; };
@@ -22,7 +21,6 @@
 /* Begin PBXFileReference section */
 		1C250E2C23B0A8B80047C33D /* Intern_Assignment_SunQ.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Intern_Assignment_SunQ.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C250E2F23B0A8B80047C33D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1C250E3123B0A8B80047C33D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1C250E3423B0A8B80047C33D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LoginView.storyboard; sourceTree = "<group>"; };
 		1C250E3623B0A8BC0047C33D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1C250E3923B0A8BC0047C33D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -72,7 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				1C45419B23B23B8A00420EA2 /* Intern_Assignment_SunQ.entitlements */,
-				1C250E4623B0B2760047C33D /* VIewController */,
+				1C250E4623B0B2760047C33D /* ViewController */,
 				1C250E4523B0B25E0047C33D /* Storyboard */,
 				1C250E3623B0A8BC0047C33D /* Assets.xcassets */,
 				1C250E3B23B0A8BC0047C33D /* Info.plist */,
@@ -90,15 +88,14 @@
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
-		1C250E4623B0B2760047C33D /* VIewController */ = {
+		1C250E4623B0B2760047C33D /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
 				1C250E2F23B0A8B80047C33D /* AppDelegate.swift */,
-				1C250E3123B0A8B80047C33D /* ViewController.swift */,
 				1C250E4323B0A99D0047C33D /* LoginViewController.swift */,
 				1C250E4723B0B3280047C33D /* TopListPageViewController.swift */,
 			);
-			path = VIewController;
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		1C250E4D23B0B5510047C33D /* Frameworks */ = {
@@ -237,7 +234,6 @@
 			files = (
 				1C250E4423B0A99D0047C33D /* LoginViewController.swift in Sources */,
 				1C250E4823B0B3280047C33D /* TopListPageViewController.swift in Sources */,
-				1C250E3223B0A8B80047C33D /* ViewController.swift in Sources */,
 				1C250E3023B0A8B80047C33D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
