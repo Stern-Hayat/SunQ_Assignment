@@ -63,6 +63,12 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
         refreshCtl.addTarget(self, action: #selector(TopListPageViewController.refresh(sender:)), for: .valueChanged)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let indexPathForSelectedRow = listTableView.indexPathForSelectedRow {
+            listTableView.deselectRow(at: indexPathForSelectedRow, animated: true)
+        }
+    }
+    
     @objc func refresh(sender: UIRefreshControl){
         refreshCtl.endRefreshing()
     }
@@ -71,11 +77,11 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
         if self.listData[indexPath.row].Mobile != ""{
             let storeURL = NSURL(string: self.listData[indexPath.row].Mobile)
             let safariViewController = SFSafariViewController(url: storeURL! as URL)
-            present(safariViewController, animated: false, completion: nil)
+            present(safariViewController, animated: true, completion: nil)
         } else if self.listData[indexPath.row].Web != ""{
             let storeURL = NSURL(string: self.listData[indexPath.row].Web)
             let safariViewController = SFSafariViewController(url: storeURL! as URL)
-            present(safariViewController, animated: false, completion: nil)
+            present(safariViewController, animated: true, completion: nil)
         } else {
             let alert: UIAlertController = UIAlertController(title: noUrlFoundAlertTitle, message: noUrlFoundAlertContent, preferredStyle: UIAlertController.Style.alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: noUrlFoundAlertOKActionLabel, style: UIAlertAction.Style.default, handler: {
