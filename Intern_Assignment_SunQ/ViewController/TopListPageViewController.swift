@@ -14,11 +14,9 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
     var jsonDataArrayDataName = "name"
     var jsonDataArrayDataUrl = "url"
     var jsonDataArrayDataMobile = "url_mobile"
-    var noUrlFoundAlertTitle = "エラー"
-    var noUrlFoundAlertContent = "このお店はホームページを開設していません．"
-    var noUrlFoundAlertOKActionLabel = "OK"
     var dataListCellIdentifierName = "cell"
-    var loctionFuncIsOffAlert = "エラー"
+    var alertErrorTitle = "エラー"
+    var noUrlFoundAlertContent = "このお店はホームページを開設していません．"
     var locationFuncIsOffMessage = "位置情報オフのためデータを取得できません"
     var alertOKActionLabel = "OK"
     let refreshCtl = UIRefreshControl()
@@ -51,7 +49,8 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
                     print("jsonError", jsonError)
                 }
             }
-        }
+        } 
+        
         listTableView.refreshControl = refreshCtl
         refreshCtl.addTarget(self, action: #selector(TopListPageViewController.refresh(sender:)), for: .valueChanged)
     }
@@ -76,8 +75,8 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
             let safariViewController = SFSafariViewController(url: storeURL! as URL)
             present(safariViewController, animated: true, completion: nil)
         } else {
-            let alert: UIAlertController = UIAlertController(title: noUrlFoundAlertTitle, message: noUrlFoundAlertContent, preferredStyle: UIAlertController.Style.alert)
-            let defaultAction: UIAlertAction = UIAlertAction(title: noUrlFoundAlertOKActionLabel, style: UIAlertAction.Style.default, handler: {
+            let alert: UIAlertController = UIAlertController(title: alertErrorTitle, message: noUrlFoundAlertContent, preferredStyle: UIAlertController.Style.alert)
+            let defaultAction: UIAlertAction = UIAlertAction(title: alertOKActionLabel, style: UIAlertAction.Style.default, handler: {
                 (_: UIAlertAction!) -> Void in
             })
             alert.addAction(defaultAction)
@@ -93,14 +92,5 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = UITableViewCell(style: .default, reuseIdentifier: dataListCellIdentifierName)
         cell.textLabel?.text = self.listData[indexPath.row].name
         return cell
-    }
-    
-    func locationInfoIsOffAlert(message: String) {
-        let alert: UIAlertController = UIAlertController(title: loctionFuncIsOffAlert, message: locationFuncIsOffMessage, preferredStyle: UIAlertController.Style.alert)
-        let defaultAction: UIAlertAction = UIAlertAction(title: alertOKActionLabel, style: UIAlertAction.Style.default, handler: {
-            (_: UIAlertAction!) -> Void in
-        })
-        alert.addAction(defaultAction)
-        present(alert, animated: true, completion: nil)
     }
 }

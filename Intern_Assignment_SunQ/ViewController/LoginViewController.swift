@@ -11,13 +11,12 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
     let URLBond = "&longitude="
     let URLSuffix = "&range=2&sort=1&hit_per_page=100"
     var URLString: String!
-    var functionRestrictedAlert = "位置情報サービスの利用が制限されている利用できません。「設定」⇒「一般」⇒「機能制限」"
-    var functionForbiddenAlert = "位置情報の利用が許可されていないため利用できません。「設定」⇒「プライバシー」⇒「位置情報サービス」⇒「アプリ名」"
-    var locationInfoIsOffAlert = "位置情報サービスがONになっていないため利用できません。「設定」⇒「プライバシー」⇒「位置情報サービス」"
-    var loctionFuncIsOffAlert = "エラー：位置情報の設定がオフになっています"
     var saveDataForKeyName = "savedURLString"
     var moveToNextPageName = "mainView"
     var moveToNextStoryBoardName = "AppContents"
+    var locationFuncIsOffAlert = "エラー"
+    var locationFuncIsOffContent = "位置情報がオンになっていないためデータを取得できません"
+    var regetDataContent = "データを取得できなかったため，再取得します"
     var noUrlFoundAlertOKActionLabel = "OK"
     @IBOutlet weak var stackView: UIStackView!
 
@@ -26,37 +25,13 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         setupProviderLoginView()
         setupLocationManager()
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        if(CLLocationManager.locationServicesEnabled() == true) {
-            switch CLLocationManager.authorizationStatus() {
-
-            case CLAuthorizationStatus.notDetermined:
-                locationManager.requestWhenInUseAuthorization()
-
-            case CLAuthorizationStatus.restricted:
-                locationInfoIsOffAlert(message: functionRestrictedAlert)
-
-            case CLAuthorizationStatus.denied:
-                locationInfoIsOffAlert(message: functionForbiddenAlert)
-
-            case CLAuthorizationStatus.authorizedWhenInUse:
-                locationManager.startUpdatingLocation()
-
-            case CLAuthorizationStatus.authorizedAlways:
-                locationManager.startUpdatingLocation()
-            }
-        } else {
-            locationInfoIsOffAlert(message: locationInfoIsOffAlert)
-        }
-    }
-
+    
     func moveToLoginPage() {
         let subStoryboard: UIStoryboard = UIStoryboard(name: moveToNextStoryBoardName, bundle: nil)
         let subExam: UIViewController = subStoryboard.instantiateViewController(withIdentifier: moveToNextPageName)
         show(subExam, sender: nil)
     }
-
+    
     func setupLocationManager() {
         locationManager = CLLocationManager()
         guard let locationManager = locationManager else { return }
@@ -66,13 +41,17 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
             locationManager.delegate = self
             locationManager.distanceFilter = 10
             locationManager.startUpdatingLocation()
-        } 
+        }
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.first
         latitude = location?.coordinate.latitude
         longitude = location?.coordinate.longitude
+        getDataMethod()
+    }
+    
+    func getDataMethod(){
         let URLString = URLPrefix + String(latitude) + URLBond + String(longitude) + URLSuffix
         print(URLString)
         let ud = UserDefaults.standard
@@ -123,19 +102,30 @@ extension LoginViewController: ASAuthorizationControllerDelegate {
             print("identity token : \(idToken)")
             print("full name : \(fullName)")
         }
-        moveToLoginPage()
+        
+        let loginStatus = CLLocationManager.authorizationStatus()
+        if loginStatus == .authorizedWhenInUse || loginStatus == .authorizedAlways{
+            switch UserDefaults.standard.object(forKey: saveDataForKeyName) {
+            case nil :
+                setupLocationManager()
+                getDataMethod()
+                locationOffAlert(message: regetDataContent)
+            default:
+                moveToLoginPage()
+            }
+        } else {
+            locationOffAlert(message: locationFuncIsOffContent)
+        }
+    }
+    
+    func locationOffAlert(message: String) {
+        let alert: UIAlertController = UIAlertController(title: locationFuncIsOffAlert, message: message, preferredStyle: .alert)
+        let defaultAction: UIAlertAction = UIAlertAction(title: noUrlFoundAlertOKActionLabel, style: .default, handler: nil)
+        alert.addAction(defaultAction)
+        present(alert, animated: true, completion: nil)
     }
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Authorization Failed: \(error)")
-    }
-
-    func locationInfoIsOffAlert(message: String) {
-        let alert: UIAlertController = UIAlertController(title: loctionFuncIsOffAlert, message: message, preferredStyle: UIAlertController.Style.alert)
-        let defaultAction: UIAlertAction = UIAlertAction(title: noUrlFoundAlertOKActionLabel, style: UIAlertAction.Style.default, handler: {
-            (_: UIAlertAction!) -> Void in
-        })
-        alert.addAction(defaultAction)
-        present(alert, animated: true, completion: nil)
     }
 }

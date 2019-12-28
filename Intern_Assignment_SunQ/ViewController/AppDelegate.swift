@@ -2,6 +2,8 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    var saveDataForKeyName = "savedURLString"
 
     var window: UIWindow?
 
@@ -22,6 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
+        let ud = UserDefaults.standard
+        ud.set("", forKey: saveDataForKeyName)
+        ud.synchronize()
+
     }
 
 }
