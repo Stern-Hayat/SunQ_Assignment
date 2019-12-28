@@ -49,11 +49,11 @@ extension Request {
             let components: [String] = {
                 let stripped = string.trimmingCharacters(in: .whitespacesAndNewlines)
 
-            #if swift(>=3.2)
+                #if swift(>=3.2)
                 let split = stripped[..<(stripped.range(of: ";")?.lowerBound ?? stripped.endIndex)]
-            #else
+                #else
                 let split = stripped.substring(to: stripped.range(of: ";")?.lowerBound ?? stripped.endIndex)
-            #endif
+                #endif
 
                 return split.components(separatedBy: "/")
             }()
@@ -94,14 +94,13 @@ extension Request {
         statusCode acceptableStatusCodes: S,
         response: HTTPURLResponse)
         -> ValidationResult
-        where S.Iterator.Element == Int
-    {
-        if acceptableStatusCodes.contains(response.statusCode) {
-            return .success
-        } else {
-            let reason: ErrorReason = .unacceptableStatusCode(code: response.statusCode)
-            return .failure(AFError.responseValidationFailed(reason: reason))
-        }
+        where S.Iterator.Element == Int {
+            if acceptableStatusCodes.contains(response.statusCode) {
+                return .success
+            } else {
+                let reason: ErrorReason = .unacceptableStatusCode(code: response.statusCode)
+                return .failure(AFError.responseValidationFailed(reason: reason))
+            }
     }
 
     // MARK: Content Type
@@ -111,44 +110,43 @@ extension Request {
         response: HTTPURLResponse,
         data: Data?)
         -> ValidationResult
-        where S.Iterator.Element == String
-    {
-        guard let data = data, data.count > 0 else { return .success }
+        where S.Iterator.Element == String {
+            guard let data = data, data.count > 0 else { return .success }
 
-        guard
-            let responseContentType = response.mimeType,
-            let responseMIMEType = MIMEType(responseContentType)
-        else {
+            guard
+                let responseContentType = response.mimeType,
+                let responseMIMEType = MIMEType(responseContentType)
+                else {
+                    for contentType in acceptableContentTypes {
+                        if let mimeType = MIMEType(contentType), mimeType.isWildcard {
+                            return .success
+                        }
+                    }
+
+                    let error: AFError = {
+                        let reason: ErrorReason = .missingContentType(acceptableContentTypes: Array(acceptableContentTypes))
+                        return AFError.responseValidationFailed(reason: reason)
+                    }()
+
+                    return .failure(error)
+            }
+
             for contentType in acceptableContentTypes {
-                if let mimeType = MIMEType(contentType), mimeType.isWildcard {
+                if let acceptableMIMEType = MIMEType(contentType), acceptableMIMEType.matches(responseMIMEType) {
                     return .success
                 }
             }
 
             let error: AFError = {
-                let reason: ErrorReason = .missingContentType(acceptableContentTypes: Array(acceptableContentTypes))
+                let reason: ErrorReason = .unacceptableContentType(
+                    acceptableContentTypes: Array(acceptableContentTypes),
+                    responseContentType: responseContentType
+                )
+
                 return AFError.responseValidationFailed(reason: reason)
             }()
 
             return .failure(error)
-        }
-
-        for contentType in acceptableContentTypes {
-            if let acceptableMIMEType = MIMEType(contentType), acceptableMIMEType.matches(responseMIMEType) {
-                return .success
-            }
-        }
-
-        let error: AFError = {
-            let reason: ErrorReason = .unacceptableContentType(
-                acceptableContentTypes: Array(acceptableContentTypes),
-                responseContentType: responseContentType
-            )
-
-            return AFError.responseValidationFailed(reason: reason)
-        }()
-
-        return .failure(error)
     }
 }
 
@@ -219,7 +217,10 @@ extension DataRequest {
     /// - returns: The request.
     @discardableResult
     public func validate() -> Self {
-        return validate(statusCode: self.acceptableStatusCodes).validate(contentType: self.acceptableContentTypes)
+        let contentTypes = { [unowned self] in
+            self.acceptableContentTypes
+        }
+        return validate(statusCode: acceptableStatusCodes).validate(contentType: contentTypes())
     }
 }
 
@@ -310,6 +311,9 @@ extension DownloadRequest {
     /// - returns: The request.
     @discardableResult
     public func validate() -> Self {
-        return validate(statusCode: self.acceptableStatusCodes).validate(contentType: self.acceptableContentTypes)
+        let contentTypes = { [unowned self] in
+            self.acceptableContentTypes
+        }
+        return validate(statusCode: acceptableStatusCodes).validate(contentType: contentTypes())
     }
 }

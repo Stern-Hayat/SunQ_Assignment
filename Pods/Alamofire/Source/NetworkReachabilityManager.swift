@@ -148,18 +148,20 @@ open class NetworkReachabilityManager {
         context.info = Unmanaged.passUnretained(self).toOpaque()
 
         let callbackEnabled = SCNetworkReachabilitySetCallback(
-            reachability,
-            { (_, flags, info) in
+            reachability, { (_, flags, info) in
                 let reachability = Unmanaged<NetworkReachabilityManager>.fromOpaque(info!).takeUnretainedValue()
                 reachability.notifyListener(flags)
-            },
+        },
             &context
         )
 
         let queueEnabled = SCNetworkReachabilitySetDispatchQueue(reachability, listenerQueue)
 
         listenerQueue.async {
+            self.previousFlags = SCNetworkReachabilityFlags(rawValue: 1 << 30)
+
             guard let flags = self.flags else { return }
+
             self.notifyListener(flags)
         }
 
@@ -188,9 +190,9 @@ open class NetworkReachabilityManager {
 
         var networkStatus: NetworkReachabilityStatus = .reachable(.ethernetOrWiFi)
 
-    #if os(iOS)
+        #if os(iOS)
         if flags.contains(.isWWAN) { networkStatus = .reachable(.wwan) }
-    #endif
+        #endif
 
         return networkStatus
     }
@@ -218,18 +220,17 @@ extension NetworkReachabilityManager.NetworkReachabilityStatus: Equatable {}
 public func ==(
     lhs: NetworkReachabilityManager.NetworkReachabilityStatus,
     rhs: NetworkReachabilityManager.NetworkReachabilityStatus)
-    -> Bool
-{
-    switch (lhs, rhs) {
-    case (.unknown, .unknown):
-        return true
-    case (.notReachable, .notReachable):
-        return true
-    case let (.reachable(lhsConnectionType), .reachable(rhsConnectionType)):
-        return lhsConnectionType == rhsConnectionType
-    default:
-        return false
-    }
+    -> Bool {
+        switch (lhs, rhs) {
+        case (.unknown, .unknown):
+            return true
+        case (.notReachable, .notReachable):
+            return true
+        case let (.reachable(lhsConnectionType), .reachable(rhsConnectionType)):
+            return lhsConnectionType == rhsConnectionType
+        default:
+            return false
+        }
 }
 
 #endif

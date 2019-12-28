@@ -10,5 +10,5 @@ target 'Intern_Assignment_SunQ' do
   # Pods for project
     pod 'SwiftyJSON'
     pod 'Alamofire'
-
+  
 end

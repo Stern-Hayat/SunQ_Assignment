@@ -161,10 +161,9 @@ open class Request {
         user: String,
         password: String,
         persistence: URLCredential.Persistence = .forSession)
-        -> Self
-    {
-        let credential = URLCredential(user: user, password: password, persistence: persistence)
-        return authenticate(usingCredential: credential)
+        -> Self {
+            let credential = URLCredential(user: user, password: password, persistence: persistence)
+            return authenticate(usingCredential: credential)
     }
 
     /// Associates a specified credential with the request.
@@ -272,10 +271,10 @@ extension Request: CustomDebugStringConvertible {
         var components = ["$ curl -v"]
 
         guard let request = self.request,
-              let url = request.url,
-              let host = url.host
-        else {
-            return "$ curl command could not be created"
+            let url = request.url,
+            let host = url.host
+            else {
+                return "$ curl command could not be created"
         }
 
         if let httpMethod = request.httpMethod, httpMethod != "GET" {
@@ -310,21 +309,21 @@ extension Request: CustomDebugStringConvertible {
             {
                 let string = cookies.reduce("") { $0 + "\($1.name)=\($1.value);" }
 
-            #if swift(>=3.2)
+                #if swift(>=3.2)
                 components.append("-b \"\(string[..<string.index(before: string.endIndex)])\"")
-            #else
+                #else
                 components.append("-b \"\(string.substring(to: string.characters.index(before: string.endIndex)))\"")
-            #endif
+                #endif
             }
         }
 
         var headers: [AnyHashable: Any] = [:]
 
         session.configuration.httpAdditionalHeaders?.filter {  $0.0 != AnyHashable("Cookie") }
-                                                    .forEach { headers[$0.0] = $0.1 }
+            .forEach { headers[$0.0] = $0.1 }
 
         request.allHTTPHeaderFields?.filter { $0.0 != "Cookie" }
-                                    .forEach { headers[$0.0] = $0.1 }
+            .forEach { headers[$0.0] = $0.1 }
 
         components += headers.map {
             let escapedValue = String(describing: $0.value).replacingOccurrences(of: "\"", with: "\\\"")
@@ -497,8 +496,19 @@ open class DownloadRequest: Request {
     // MARK: State
 
     /// Cancels the request.
-    open override func cancel() {
-        downloadDelegate.downloadTask.cancel { self.downloadDelegate.resumeData = $0 }
+    override open func cancel() {
+        cancel(createResumeData: true)
+    }
+
+    /// Cancels the request.
+    ///
+    /// - parameter createResumeData: Determines whether resume data is created via the underlying download task or not.
+    open func cancel(createResumeData: Bool) {
+        if createResumeData {
+            downloadDelegate.downloadTask.cancel { self.downloadDelegate.resumeData = $0 }
+        } else {
+            downloadDelegate.downloadTask.cancel()
+        }
 
         NotificationCenter.default.post(
             name: Notification.Name.Task.DidCancel,
@@ -533,17 +543,16 @@ open class DownloadRequest: Request {
     open class func suggestedDownloadDestination(
         for directory: FileManager.SearchPathDirectory = .documentDirectory,
         in domain: FileManager.SearchPathDomainMask = .userDomainMask)
-        -> DownloadFileDestination
-    {
-        return { temporaryURL, response in
-            let directoryURLs = FileManager.default.urls(for: directory, in: domain)
+        -> DownloadFileDestination {
+            return { temporaryURL, response in
+                let directoryURLs = FileManager.default.urls(for: directory, in: domain)
 
-            if !directoryURLs.isEmpty {
-                return (directoryURLs[0].appendingPathComponent(response.suggestedFilename!), [])
+                if !directoryURLs.isEmpty {
+                    return (directoryURLs[0].appendingPathComponent(response.suggestedFilename!), [])
+                }
+
+                return (temporaryURL, [])
             }
-
-            return (temporaryURL, [])
-        }
     }
 }
 

@@ -12,9 +12,12 @@
 		1C250E3723B0A8BC0047C33D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1C250E3623B0A8BC0047C33D /* Assets.xcassets */; };
 		1C250E3A23B0A8BC0047C33D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C250E3823B0A8BC0047C33D /* LaunchScreen.storyboard */; };
 		1C250E4223B0A9750047C33D /* AppContents.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C250E4123B0A9750047C33D /* AppContents.storyboard */; };
-		1C250E4423B0A99D0047C33D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C250E4323B0A99D0047C33D /* LoginViewController.swift */; };
 		1C250E4823B0B3280047C33D /* TopListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C250E4723B0B3280047C33D /* TopListPageViewController.swift */; };
 		1C250E4F23B0B5520047C33D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C250E4E23B0B5520047C33D /* CoreLocation.framework */; };
+		1C51BE0123B614BA00271F02 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C51BE0023B614BA00271F02 /* Alamofire.framework */; };
+		1C51BE0323B614BA00271F02 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C51BE0223B614BA00271F02 /* SwiftyJSON.framework */; };
+		1C51BE0523B614CA00271F02 /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C51BE0423B614CA00271F02 /* AuthenticationServices.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		1C663ADA23B6360D0076D5A9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C250E4323B0A99D0047C33D /* LoginViewController.swift */; };
 		8F8B63C8817FD72BB33F0725 /* Pods_Intern_Assignment_SunQ.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2CF7CB7037FB3A7C67741494 /* Pods_Intern_Assignment_SunQ.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +33,9 @@
 		1C250E4723B0B3280047C33D /* TopListPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopListPageViewController.swift; sourceTree = "<group>"; };
 		1C250E4E23B0B5520047C33D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1C45419B23B23B8A00420EA2 /* Intern_Assignment_SunQ.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Intern_Assignment_SunQ.entitlements; sourceTree = "<group>"; };
+		1C51BE0023B614BA00271F02 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C51BE0223B614BA00271F02 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C51BE0423B614CA00271F02 /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = System/Library/Frameworks/AuthenticationServices.framework; sourceTree = SDKROOT; };
 		2CF7CB7037FB3A7C67741494 /* Pods_Intern_Assignment_SunQ.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Intern_Assignment_SunQ.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FACF0F80F7D37665F3CCB3BF /* Pods-Intern_Assignment_SunQ.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Intern_Assignment_SunQ.release.xcconfig"; path = "Target Support Files/Pods-Intern_Assignment_SunQ/Pods-Intern_Assignment_SunQ.release.xcconfig"; sourceTree = "<group>"; };
 		FEE5A8F549B0F53A3B7DA748 /* Pods-Intern_Assignment_SunQ.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Intern_Assignment_SunQ.debug.xcconfig"; path = "Target Support Files/Pods-Intern_Assignment_SunQ/Pods-Intern_Assignment_SunQ.debug.xcconfig"; sourceTree = "<group>"; };
@@ -40,6 +46,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C51BE0523B614CA00271F02 /* AuthenticationServices.framework in Frameworks */,
+				1C51BE0123B614BA00271F02 /* Alamofire.framework in Frameworks */,
+				1C51BE0323B614BA00271F02 /* SwiftyJSON.framework in Frameworks */,
 				1C250E4F23B0B5520047C33D /* CoreLocation.framework in Frameworks */,
 				8F8B63C8817FD72BB33F0725 /* Pods_Intern_Assignment_SunQ.framework in Frameworks */,
 			);
@@ -101,6 +110,9 @@
 		1C250E4D23B0B5510047C33D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1C51BE0423B614CA00271F02 /* AuthenticationServices.framework */,
+				1C51BE0023B614BA00271F02 /* Alamofire.framework */,
+				1C51BE0223B614BA00271F02 /* SwiftyJSON.framework */,
 				1C250E4E23B0B5520047C33D /* CoreLocation.framework */,
 				2CF7CB7037FB3A7C67741494 /* Pods_Intern_Assignment_SunQ.framework */,
 			);
@@ -128,6 +140,7 @@
 				1C250E2923B0A8B80047C33D /* Frameworks */,
 				1C250E2A23B0A8B80047C33D /* Resources */,
 				857C75DE2275783283860F78 /* [CP] Embed Pods Frameworks */,
+				1C51BE0823B61FEC00271F02 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -154,7 +167,7 @@
 				};
 			};
 			buildConfigurationList = 1C250E2723B0A8B80047C33D /* Build configuration list for PBXProject "Intern_Assignment_SunQ" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 10.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -186,6 +199,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1C51BE0823B61FEC00271F02 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "
+";
+		};
 		7DD5DC1988C2F8464B6ED24F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -232,7 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1C250E4423B0A99D0047C33D /* LoginViewController.swift in Sources */,
+				1C663ADA23B6360D0076D5A9 /* LoginViewController.swift in Sources */,
 				1C250E4823B0B3280047C33D /* TopListPageViewController.swift in Sources */,
 				1C250E3023B0A8B80047C33D /* AppDelegate.swift in Sources */,
 			);
@@ -369,6 +400,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -385,6 +417,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 27UFW2M9H8;
 				INFOPLIST_FILE = Intern_Assignment_SunQ/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -405,6 +438,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 27UFW2M9H8;
 				INFOPLIST_FILE = Intern_Assignment_SunQ/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
