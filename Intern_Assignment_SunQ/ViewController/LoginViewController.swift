@@ -52,11 +52,13 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     func getDataMethod(){
-        let URLString = URLPrefix + String(latitude) + URLBond + String(longitude) + URLSuffix
-        print(URLString)
-        let ud = UserDefaults.standard
-        ud.set(URLString, forKey: saveDataForKeyName)
-        ud.synchronize()
+        if latitude != nil || longitude != nil{
+            let URLString = URLPrefix + String(latitude) + URLBond + String(longitude) + URLSuffix
+            print(URLString)
+            let ud = UserDefaults.standard
+            ud.set(URLString, forKey: saveDataForKeyName)
+            ud.synchronize()
+        }
     }
 
     @available(iOS 13.0, *)

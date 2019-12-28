@@ -35,13 +35,7 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
                     //Webサイト及びモバイルサイトがない場合の例外処理検証用のダミーデータ
                         self.listData.append((name: "A-ホームページを作っていないお店", Web: "", Mobile: ""))
                     for listDataNumber in 0...jsonDataCount {
-                        let jsonData = json[self.jsonDataArrayDataList][listDataNumber][self.jsonDataArrayDataName]
-                        let jsonWebData = json[self.jsonDataArrayDataList][listDataNumber][self.jsonDataArrayDataUrl]
-                        let jsonMobileData = json[self.jsonDataArrayDataList][listDataNumber][self.jsonDataArrayDataMobile]
-                        let jsonConvertedData = jsonData.stringValue
-                        let jsonWebConvertedData = jsonWebData.stringValue
-                        let jsonMobileConvertedData = jsonMobileData.stringValue
-                        self.listData.append((name: jsonConvertedData, Web: jsonWebConvertedData, Mobile: jsonMobileConvertedData))
+                    self.listData.append((name:json[self.jsonDataArrayDataList][listDataNumber][self.jsonDataArrayDataName].stringValue, Web:json[self.jsonDataArrayDataList][listDataNumber][self.jsonDataArrayDataUrl].stringValue, Mobile:json[self.jsonDataArrayDataList][listDataNumber][self.jsonDataArrayDataMobile].stringValue))
                         self.listData.sort {$0<$1}
                         self.listTableView.reloadData()
                     }
@@ -50,7 +44,6 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
                 }
             }
         } 
-        
         listTableView.refreshControl = refreshCtl
         refreshCtl.addTarget(self, action: #selector(TopListPageViewController.refresh(sender:)), for: .valueChanged)
     }
