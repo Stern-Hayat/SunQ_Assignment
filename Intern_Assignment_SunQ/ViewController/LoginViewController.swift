@@ -62,11 +62,11 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         guard let locationManager = locationManager else { return }
         locationManager.requestWhenInUseAuthorization()
         let status = CLLocationManager.authorizationStatus()
-        if status == .authorizedWhenInUse {
+        if status == .authorizedWhenInUse || status == .authorizedAlways{
             locationManager.delegate = self
             locationManager.distanceFilter = 10
             locationManager.startUpdatingLocation()
-        }
+        } 
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -74,6 +74,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         latitude = location?.coordinate.latitude
         longitude = location?.coordinate.longitude
         let URLString = URLPrefix + String(latitude) + URLBond + String(longitude) + URLSuffix
+        print(URLString)
         let ud = UserDefaults.standard
         ud.set(URLString, forKey: saveDataForKeyName)
         ud.synchronize()

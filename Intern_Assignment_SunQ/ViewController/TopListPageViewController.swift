@@ -21,7 +21,14 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
     var loctionFuncIsOffAlert = "エラー"
     var locationFuncIsOffMessage = "位置情報オフのためデータを取得できません"
     var alertOKActionLabel = "OK"
+    var longitude: Double!
+    var latitude: Double!
+    let URLPrefix = "https://api.gnavi.co.jp/RestSearchAPI/v3/?keyid=15052231058811e607cb99145249b3ed&latitude="
+    let URLBond = "&longitude="
+    let URLSuffix = "&range=2&sort=1&hit_per_page=100"
+    var URLString: String!
     let refreshCtl = UIRefreshControl()
+    var locationManager: CLLocationManager!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,10 +54,10 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
                         self.listData.sort {$0<$1}
                         self.listTableView.reloadData()
                     }
-            } catch let jsonError {
-                print("jsonError", jsonError)
+                } catch let jsonError {
+                    print("jsonError", jsonError)
+                }
             }
-          }
         }
         listTableView.refreshControl = refreshCtl
         refreshCtl.addTarget(self, action: #selector(TopListPageViewController.refresh(sender:)), for: .valueChanged)
@@ -70,7 +77,7 @@ class TopListPageViewController: UIViewController, UITableViewDelegate, UITableV
             let safariViewController = SFSafariViewController(url: storeURL! as URL)
             present(safariViewController, animated: false, completion: nil)
         } else {
-            let alert: UIAlertController = UIAlertController(title: noUrlFoundAlertContent, message: noUrlFoundAlertTitle, preferredStyle: UIAlertController.Style.alert)
+            let alert: UIAlertController = UIAlertController(title: noUrlFoundAlertTitle, message: noUrlFoundAlertContent, preferredStyle: UIAlertController.Style.alert)
             let defaultAction: UIAlertAction = UIAlertAction(title: noUrlFoundAlertOKActionLabel, style: UIAlertAction.Style.default, handler: {
                 (_: UIAlertAction!) -> Void in
             })
